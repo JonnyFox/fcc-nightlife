@@ -1,0 +1,8 @@
+<h1>
+  {{title}}
+</h1>
+<div id="results"></div>
+<input type="text" [formControl]="searchControl">
+<div *ngFor="let place of places">
+    <span>{{place | json}}</span>
+</div>
