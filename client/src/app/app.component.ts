@@ -1,31 +1,41 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl } from "@angular/forms";
-import 'rxjs/add/operator/debounceTime';
-import { } from '@types/googlemaps';
+import 'rxjs';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
+    private isAlive = true;
+
     title = 'app works!';
 
-    public places = [];
+    public places : google.maps.places.PlaceResult[] = [];
 
-    public searchControl: FormControl;
+    public searchControl = new FormControl();
 
     private searchService: google.maps.places.PlacesService;
 
-    constructor(private zone: NgZone) {
+    constructor(private zone: NgZone) { }
+
+    ngAfterViewInit() { 
         let map = new google.maps.Map(document.getElementById('results'));
         this.searchService = new google.maps.places.PlacesService(map);
-    }
-
-    ngOnInit() {
         this.searchControl.valueChanges
             .debounceTime(500)
-            .subscribe((value) => { 
+            .takeWhile(() => this.isAlive)
+            .distinctUntilChanged()
+            .subscribe((value) => {
+                this.zone.run(() => {
+                    this.places = [];
+                });
+
+                if (!value) return;
+
+                value = 'bar near ' + value;                
+
                 let request: google.maps.places.TextSearchRequest = {
                     query: value
                 };
@@ -33,8 +43,12 @@ export class AppComponent implements OnInit {
                 this.searchService.textSearch(request, (res) => {
                     this.zone.run(() => {
                         this.places = res;
-                    })
+                    });
                 });
-            })
+            });
+    }
+
+    ngOnDestroy() { 
+        this.isAlive = false;
     }
 }
