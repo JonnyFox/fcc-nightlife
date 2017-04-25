@@ -1,15 +1,6 @@
-<h1>
-  {{title}}
-</h1>
-<div id="results"></div>
-<input type="text" [formControl]="searchControl" >
-<div *ngFor="let place of places">
-    <md-card class="example-card">
-    <md-card-header>{{place.name}}</md-card-header>
-    <md-card-content>{{place.formatted_address}}</md-card-content>
-    <md-card-actions>
-        <button md-button>GO</button>
-        <button md-button>SHARE</button>
-    </md-card-actions>
-</md-card>
+<md-toolbar color="primary" class="fixed"><a routerLink="/dashboard" style="text-decoration: none; color: white;">Voting App</a>
+    <span class="app-toolbar-filler"></span>
+</md-toolbar>
+<div class="full-height app-content">
+    <router-outlet></router-outlet>
 </div>

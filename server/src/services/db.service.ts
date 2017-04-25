@@ -3,9 +3,7 @@ import { injectable } from 'inversify';
 import { ConfigService } from './config.service';
 
 export enum Collections {
-    Users,
-    Votes,
-    Polls
+    Places
 }
 
 @injectable()

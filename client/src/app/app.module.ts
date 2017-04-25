@@ -1,23 +1,33 @@
+import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MdCardModule, MdCard, MaterialModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { IdentityService, TokenService } from './shared/services';
+import { DashboardModule } from './dashboard/dashboard.module';
+
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
+        FormsModule,
         HttpModule,
+        AppRoutingModule,
+        DashboardModule,
         MaterialModule
     ],
-    providers: [],
+    providers: [
+        IdentityService,
+        TokenService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

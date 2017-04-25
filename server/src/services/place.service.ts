@@ -7,6 +7,6 @@ import { BaseService } from './base.service';
 export class PlaceService extends BaseService<Place>  {
     constructor(protected dbService: DbService) {
         super(dbService);
-        this.collectionType = Collections.Polls;
+        this.collectionType = Collections.Places;
     }
 }

@@ -1,0 +1,63 @@
+.profile-img {
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+}
+
+.btn-remove {
+    transition: all 0.5s;
+    width: 0px;
+    opacity: 0;
+}
+
+.votes-badge {
+    outline: none;
+    &:hover {
+        .btn-remove {
+            width: 25px;
+            padding-left: 10px;
+            opacity: 1;
+        }
+    }
+}
+
+.caption {
+    font-size: 2rem;
+}
+
+.poll-card {
+    transition: all .5s ease;
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: #DDD;
+    background-color: darken(#424242, 10);
+
+    &:hover {
+        color: #FFF;
+        background-color: #424242;
+    }
+}
+
+.search-input-container{
+    display: flex;
+}
+
+.search-input{
+    margin: auto;
+    width: 20%;
+    transition: all 1s ease-in-out;
+    background-color: #333;
+    border: 1px solid #888;
+    text-align: center;
+
+    &:focus,
+    &:hover,
+    &.ng-dirty{
+        font-size: 2rem;
+        width: 50%;
+    }
+}
+
+.divider {
+    border-top: 2px dashed #555;
+}

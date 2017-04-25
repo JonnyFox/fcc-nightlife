@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row search-input-container">
+        <input type="text" [formControl]="searchControl" class="search-input">
+        <div id="results"></div>
+    </div>
+    <hr class="animated fadeIn divider" *ngIf="places && places.length > 0">
+    <div class="row" *ngFor="let i of placesRows">
+        <div class="col-xs-4">
+            <md-card *ngIf="places[i*3]" class="poll-card animated fadeIn" (click)="go(i*3)">
+                <span class="caption">{{places[i*3]?.name}}</span>
+                <md-chip-list class="pull-right">
+                    <md-chip selected="true" color="primary" class="votes-badge">{{places[i*3].people.length}} going<i class="btn-remove mdi mdi-delete pull-right mdi-18px" (click)="remove($event,i*3)"></i></md-chip>
+                </md-chip-list>
+            </md-card>
+        </div>
+        <div class="col-xs-4">
+            <md-card *ngIf="places[i*3+1]" class="poll-card animated fadeIn" (click)="go(i*3+1)">
+                <span class="caption">{{places[i*3+1]?.name}}</span>
+                <md-chip-list class="pull-right">
+                    <md-chip selected="true" color="primary" class="votes-badge">{{places[i*3+1].people.length}} going<i class="btn-remove mdi mdi-delete pull-right mdi-18px" (click)="remove($event,i*3+1)"></i></md-chip>
+                </md-chip-list>
+            </md-card>
+        </div>
+        <div class="col-xs-4">
+            <md-card *ngIf="places[i*3+2]" class="poll-card animated fadeIn" (click)="go(i*3+2)">
+                <span class="caption">{{places[i*3+2]?.name}}</span>
+                <md-chip-list class="pull-right">
+                    <md-chip selected="true" color="primary" class="votes-badge">{{places[i*3+2].people.length}} going<i class="btn-remove mdi mdi-delete pull-right mdi-18px" (click)="remove($event,i*3+2)"></i></md-chip>
+                </md-chip-list>
+            </md-card>
+        </div>
+    </div>
+</div>
