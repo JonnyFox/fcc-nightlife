@@ -7,15 +7,17 @@
     "clean": "rimraf dist",
     "copy-deps": "copy-newer --cwd node_modules ** ../dist/node_modules",
     "start": "node ../dist/server/server.js",
-    "preserve" : "npm run build",
-    "serve": "concurrently \"npm run build.w\" \"nodemon ../dist/server/server.js\"",
+    "preserve": "npm run build",
+    "s": "npm run serve",
+    "serve": "concurrently \"npm run build.w\" \"nodemon --watch ../dist/server ../dist/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\"",
     "prebuild": "npm install && rimraf ../dist/public",
-    "build": "npm run copy-deps && tsc --p ./src",
-    "build.w": "npm run copy-deps && tsc --p ./src -w"
+    "build": "npm run copy-deps && tsc",
+    "build.w": "npm run copy-deps && tsc -w"
   },
   "private": true,
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "body-parser": "1.17.1",
     "cors": "2.8.3",
     "express": "4.15.2",
@@ -23,15 +25,19 @@
     "inversify-express-utils": "2.0.2",
     "mongodb": "2.2.25",
     "morgan": "1.8.1",
-    "reflect-metadata": "0.1.10"
+    "reflect-metadata": "0.1.10",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0"
   },
   "devDependencies": {
     "@types/body-parser": "1.16.3",
     "@types/cors": "2.8.1",
     "@types/express": "4.0.35",
+    "@types/googlemaps": "^3.26.10",
     "@types/mongodb": "2.1.43",
     "@types/morgan": "1.7.32",
     "@types/node": "7.0.12",
+    "@types/request-promise": "^4.1.33",
     "concurrently": "3.4.0",
     "copy-newer": "2.1.2",
     "morgan": "1.8.1",

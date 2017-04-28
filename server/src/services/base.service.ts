@@ -6,40 +6,41 @@ export { InsertOneWriteOpResult, UpdateWriteOpResult, DeleteWriteOpResultObject 
 
 @injectable()
 export abstract class BaseService<T> {
-  protected collectionType: Collections;
 
-  private get collection(): Promise<Collection> {
-    return this.dbService.getCollection(this.collectionType);
-  };
+    protected collectionType: Collections;
 
-  constructor(protected dbService: DbService) { }
+    private get collection(): Promise<Collection> {
+        return this.dbService.getCollection(this.collectionType);
+    };
 
-  public async find(filter?: Object): Promise<T[]> {
-    let collection = await this.dbService.getCollection(this.collectionType);
-    return collection.find(filter).toArray();
-  }
+    constructor(protected dbService: DbService) { }
 
-  public async findOneById(objectId: string): Promise<T> {
-    let collection = await this.dbService.getCollection(this.collectionType);
-    let items = await collection.find({ _id: new ObjectID(objectId) }).limit(1).toArray();
-    return items[0];
-  }
+    public async findPlaces(filter?: Object): Promise<T[]> {
+        let collection = await this.dbService.getCollection(this.collectionType);
+        return collection.find(filter).toArray();
+    }
 
-  public async insert(entity: T): Promise<ObjectID> {
-    let collection = await this.dbService.getCollection(this.collectionType);
-    let result = await collection.insertOne(entity);
-    return result.insertedId;
-  }
+    public async findOneById(objectId: string): Promise<T> {
+        let collection = await this.dbService.getCollection(this.collectionType);
+        let items = await collection.find({ _id: new ObjectID(objectId) }).limit(1).toArray();
+        return items[0];
+    }
 
-  public async update(objectId: string, entity: T): Promise<T> {
-    let collection = await this.dbService.getCollection(this.collectionType);
-    delete (<any>entity)._id;
-    await collection.updateOne({ _id: new ObjectID(objectId) }, entity);
-    return this.findOneById(objectId);
-  }
+    public async insert(entity: T): Promise<ObjectID> {
+        let collection = await this.dbService.getCollection(this.collectionType);
+        let result = await collection.insertOne(entity);
+        return result.insertedId;
+    }
 
-  public async remove(objectId: string): Promise<DeleteWriteOpResultObject> {
-    let collection = await this.dbService.getCollection(this.collectionType);
-    return collection.deleteOne({ _id: new ObjectID(objectId) });
-  }
+    public async update(objectId: string, entity: T): Promise<T> {
+        let collection = await this.dbService.getCollection(this.collectionType);
+        delete (<any>entity)._id;
+        await collection.updateOne({ _id: new ObjectID(objectId) }, entity);
+        return this.findOneById(objectId);
+    }
+
+    public async remove(objectId: string): Promise<DeleteWriteOpResultObject> {
+        let collection = await this.dbService.getCollection(this.collectionType);
+        return collection.deleteOne({ _id: new ObjectID(objectId) });
+    }
 }

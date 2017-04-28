@@ -9,10 +9,11 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "sourceMap": true,
-        "outDir": "../../dist/server",
+        "outDir": "../dist/server",
         "typeRoots": [
             "node_modules/@types",
-            "@types"
+            "@types",
+            "typings"
         ]
     },
     "exclude": [

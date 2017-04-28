@@ -5,12 +5,13 @@
 }
 
 .btn-remove {
-    transition: all 0.5s;
+    transition: all 0.75s;
     width: 0px;
     opacity: 0;
 }
 
 .votes-badge {
+    line-height: 2rem !important;
     outline: none;
     &:hover {
         .btn-remove {
@@ -23,6 +24,10 @@
 
 .caption {
     font-size: 2rem;
+}
+
+.closer{
+    clear: both;
 }
 
 .poll-card {

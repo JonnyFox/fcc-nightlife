@@ -12,14 +12,19 @@ export class PlaceController {
     constructor(private placeService: PlaceService) { }
 
     @Get('/')
-    public async getPlaces(): Promise<Place[]> {
-        return await this.placeService.find();
+    public async get(): Promise<Place[]> {
+        return await this.placeService.findPlaces();
+    }
+
+    @Get('/:query')
+    public async getPlaces(request: Request): Promise<Place[]> {
+        return await this.placeService.findGooglePlaces(request.params.query);
     }
 
     @Post('/byIds')
     public getPlacesByIds(request: Request): Promise<Place[]> {
         let ids: string[] = request.body.ids;
-        return this.placeService.find({ _id: { $in: ids } });
+        return this.placeService.findPlaces({ _id: { $in: ids } });
     }
 
     @Post('/')

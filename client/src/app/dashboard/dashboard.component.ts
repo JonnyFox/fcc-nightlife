@@ -71,8 +71,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.places[index].people.push(this.identityService.identity.email);
         this.placeService.post({
             _id: this.places[index].place_id,
-            people : this.places[index].people
+            people: this.places[index].people
         });
+    }
+
+    public remove(index: number) {
+        let idx = this.places[index].people.indexOf(this.identityService.identity.email);
+        if (idx != -1) {
+            this.places[index].people.slice(idx, 1);
+        }
     }
 
     ngOnDestroy() {

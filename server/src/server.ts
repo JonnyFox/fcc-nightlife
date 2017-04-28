@@ -22,5 +22,4 @@ server.setConfig((app) => {
 
 let app = server.build().listen(configService.port);
 console.log(`Server started on port ${configService.port} :)`);
-
 exports = module.exports = app;
