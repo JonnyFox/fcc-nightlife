@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete } from 'inversify-express-utils';
+import { Controller, Get, Post, Put, Delete, Response } from 'inversify-express-utils';
 import { injectable } from 'inversify';
 import { Request } from '@types/express';
 import { ObjectID } from "@types/mongodb";
@@ -19,6 +19,14 @@ export class PlaceController {
     @Get('/:query')
     public async getPlaces(request: Request): Promise<Place[]> {
         return await this.placeService.findGooglePlaces(request.params.query);
+    }
+
+    @Get('/photo/:id') 
+    public async getPhoto(request:Request, @Response() response: Express.Response) : Promise<any>{
+        let content = await this.placeService.getPlacePhoto(request.params.id);
+        response.
+        res.headers.set('Content-type', 'image');
+        return res;
     }
 
     @Post('/byIds')
