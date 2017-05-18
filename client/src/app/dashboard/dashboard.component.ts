@@ -1,3 +1,4 @@
+import { Identity } from '../shared';
 import { FormControl } from "@angular/forms";
 import { MdDialog } from '@angular/material';
 import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
@@ -28,6 +29,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     private searchService: google.maps.places.PlacesService;
 
+    public identity: Identity;
+
     constructor(
         private zone: NgZone,
         private identityService: IdentityService,
@@ -35,48 +38,38 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        let map = new google.maps.Map(document.getElementById('results'));
-        this.searchService = new google.maps.places.PlacesService(map);
         this.searchControl.valueChanges
-            .debounceTime(500)
             .takeWhile(() => this.isAlive)
+            .debounceTime(500)
             .distinctUntilChanged()
-            .subscribe((value) => {
-                this.places = [];
-
-                if (!value) return;
-
-                value = 'bar near ' + value;
-
-                let request: google.maps.places.TextSearchRequest = {
-                    query: value
-                };
-
-                this.searchService.textSearch(request, (res) => {
-                    this.zone.run(() => {
-                        this.places = res.map((p: ExtPlaceResult) => {
-                            p.people = [];
-                            return p;
-                        });
-                        this.placesRows = [];
-                        for (var i = 0; i < Math.ceil(res.length / 3); i++) {
-                            this.placesRows.push(i);
-                        }
-                    });
-                });
+            .filter(i => i != null && i != '')
+            .do(i => this.places = this.placesRows = [])
+            .switchMap((value) => this.placeService.search(value))
+            .subscribe((res: any) => {
+                this.places = res;
+                for (var i = 0; i < Math.ceil(this.places.length / 3); i++) {
+                    this.placesRows.push(i);
+                }
             });
+
+        this.identityService.$identity.subscribe(identity => this.identity = identity);
     }
 
     public go(index: number) {
-        this.places[index].people.push(this.identityService.identity.email);
-        this.placeService.post({
-            _id: this.places[index].place_id,
-            people: this.places[index].people
-        });
+        if (!this.places[index].people.some(p => p === this.identity.email)) {
+            let tempPeople = this.places[index].people;
+            tempPeople.push(this.identity.email);
+            this.placeService.put(this.places[index].place_id, {
+                _id: this.places[index].place_id,
+                people: this.places[index].people
+            }).subscribe(() => {
+                this.places[index].people.push(this.identity.email);
+            });
+        }
     }
 
     public remove(index: number) {
-        let idx = this.places[index].people.indexOf(this.identityService.identity.email);
+        let idx = this.places[index].people.indexOf(this.identity.email);
         if (idx != -1) {
             this.places[index].people.slice(idx, 1);
         }

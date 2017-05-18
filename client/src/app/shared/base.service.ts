@@ -37,11 +37,11 @@ export abstract class BaseService<T> {
             .catch(this.handleError);
     }
 
-    private extractData(res: Response) {
+    protected extractData(res: Response) {
         return res.json();
     }
 
-    private handleError(error: Response | any) {
+    protected handleError(error: Response | any) {
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';

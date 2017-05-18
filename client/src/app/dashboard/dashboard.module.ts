@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { PlaceService } from '../shared/services';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { CanActivateAuthGuard } from './can-activate-auth-guard';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { DashboardComponent } from './dashboard.component';
         MaterialModule
     ],
     providers: [
-        PlaceService
+        PlaceService,
+        CanActivateAuthGuard
     ],
     exports: [
         RouterModule

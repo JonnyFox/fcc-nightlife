@@ -1,23 +1,18 @@
 {
-  "name": "fcc-nightlife-app",
-  "version": "0.0.0",
-  "license": "MIT",
-  "angular-cli": {},
-  "scripts": {
-    "clean": "rimraf dist",
-    "start": "node ./dist/server/server.js",
-    "prebuild": "npm run clean",
-    "build": "concurrently \"cd server && npm i && npm run build\" \"cd client && npm i && npm run build\""
-  },
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "cors": "^2.8.2",
-    "express": "^4.14.0",
-    "inversify": "^2.0.1",
-    "inversify-express-utils": "^2.0.2",
-    "mongodb": "^2.2.12",
-    "morgan": "^1.7.0",
-    "reflect-metadata": "^0.1.8"
-  }
+    "name": "fcc-nightlife-app",
+    "version": "0.0.0",
+    "license": "MIT",
+    "angular-cli": {},
+    "scripts": {
+        "clean": "rimraf dist",
+        "start": "node ./dist/server/server.js",
+        "postinstall": "npm run build",
+        "prebuild": "npm run clean",
+        "build": "concurrently \"cd server && npm i && npm run build\" \"cd client && npm i && npm run build\""
+    },
+    "private": true,
+    "dependencies": {
+        "concurrently": "3.4.0",
+        "rimraf": "2.6.1"
+    }
 }

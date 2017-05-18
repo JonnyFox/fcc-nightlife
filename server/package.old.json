@@ -11,7 +11,7 @@
     "s": "npm run serve",
     "serve": "concurrently \"npm run build.w\" \"nodemon --watch ../dist/server ../dist/server/server.js\"",
     "lint": "tslint \"src/**/*.ts\"",
-    "prebuild": "npm install",
+    "prebuild": "npm install && rimraf ../dist/public",
     "build": "npm run copy-deps && tsc",
     "b" : "npm run build.w",
     "build.w": "npm run copy-deps && tsc -w"
@@ -28,7 +28,9 @@
     "morgan": "1.8.1",
     "reflect-metadata": "0.1.10",
     "request": "^2.81.0",
-    "request-promise": "^4.2.0",
+    "request-promise": "^4.2.0"
+  },
+  "devDependencies": {
     "@types/body-parser": "1.16.3",
     "@types/cors": "2.8.1",
     "@types/express": "4.0.35",

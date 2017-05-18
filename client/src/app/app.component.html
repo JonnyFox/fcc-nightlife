@@ -1,5 +1,7 @@
 <md-toolbar color="primary" class="fixed"><a routerLink="/dashboard" style="text-decoration: none; color: white;">Voting App</a>
     <span class="app-toolbar-filler"></span>
+    <div *ngIf="!identity" class="centered" id="{{googleLoginButtonId}}"></div>
+    <span *ngIf="identity" class="pull-right"><img [src]="identity?.imageUrl" class="identity-image" >{{identity?.name}}</span>
 </md-toolbar>
 <div class="full-height app-content">
     <router-outlet></router-outlet>
