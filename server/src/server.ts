@@ -10,15 +10,14 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 
 let configService = container.get(ConfigService);
 let server = new InversifyExpressServer(container);
-
 server.setConfig((app) => {
-    app.use(cors());
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
-    app.use(express.static(path.join(__dirname, '../public')));
-    app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
-    app.use('/app', express.static(path.join(__dirname, '../public/app')));
-    app.use(logger('dev'));
+  app.use(cors());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(express.static(path.join(__dirname, '../public')));
+  app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
+  app.use('/app', express.static(path.join(__dirname, '../public/app')));
+  app.use(logger('dev'));
 });
 
 let app = server.build().listen(configService.port);
