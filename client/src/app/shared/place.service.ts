@@ -8,7 +8,7 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class PlaceService extends BaseService<Place> {
     constructor(protected http: Http) {
-        super(http, 'http://localhost:8999/api/places');
+        super(http, 'http://localhost/api/places');
     }
 
     public search(query: string): Observable<{ results: google.maps.places.PlaceResult[] }> {
