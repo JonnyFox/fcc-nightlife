@@ -18,15 +18,6 @@ server.setConfig((app) => {
     app.use(express.static(path.join(__dirname, '../public')));
     app.use('/lib', express.static(path.join(__dirname, '../../node_modules')));
     app.use('/app', express.static(path.join(__dirname, '../public/app')));
-    app.use(() => { 
-        return (req: Express.Request, res: Express.Response, next: () => {}) => {
-            if ((<string>(<any>req).path).startsWith('/api')) {
-                return next();
-            } else {
-                return express.static(path.join(__dirname, '../public/index.html'))
-            }
-        };
-    });
     app.use(logger('dev'));
 });
 
