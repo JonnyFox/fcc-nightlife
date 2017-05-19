@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.prod';
 @Injectable()
 export class PlaceService extends BaseService<Place> {
     constructor(protected http: Http) {
-        super(http, (environment.appUrl || 'http://localhost:8999/') + 'api/places');
+        super(http, environment.appUrl + 'api/places');
     }
 
     public search(query: string): Observable<{ results: google.maps.places.PlaceResult[] }> {
